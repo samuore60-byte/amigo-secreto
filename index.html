@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🎁 Amigo Secreto Navideño 🎄</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #0b3d2e 0%, #1a5c3a 50%, #8b0000 100%);
+    color: #fff;
+    padding: 15px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .container {
+    max-width: 700px;
+    margin: 10px auto;
+    padding: 25px;
+    background: rgba(255,255,255,0.1);
+    border: 3px solid #ffd700;
+    border-radius: 20px;
+    box-shadow: 0 0 40px rgba(255,215,0,0.3);
+    backdrop-filter: blur(10px);
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px dashed #ffd700;
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
+    color: #ffd700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-style: italic;
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    opacity: 0.9;
+  }
+
+  .device-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-top: 10px;
+    border: 2px solid #ffd700;
+  }
+
+  .screen { display: none; animation: fadeIn 0.5s; }
+  .screen.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section {
+    background: rgba(0,0,0,0.25);
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid rgba(255,215,0,0.3);
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    color: #ffd700;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    border: 3px solid #ffd700;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.95);
+    color: #0b3d2e;
+    font-weight: bold;
+    outline: none;
+    transition: transform 0.2s;
+  }
+
+  input[type="text"]:focus, input[type="password"]:focus {
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(255,215,0,0.5);
+  }
+
+  .name-input-area {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .name-input-area input {
+    flex: 1;
+  }
+
+  .btn-add {
+    padding: 14px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    background: #1a5c3a;
+    color: #fff;
+    border: 3px solid #ffd700;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .btn-add:hover {
+    transform: scale(1.05);
+  }
+
+  .participant-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .participant-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    border-left: 4px solid #ffd700;
+    animation: slideIn 0.3s;
+  }
+
+  @keyframes slideIn {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  .participant-name {
+    font-weight: bold;
+    flex: 1;
+    font-size: 1.05rem;
+  }
+
+  .participant-number {
+    background: #ffd700;
+    color: #0b3d2e;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  .remove-btn {
+    cursor: pointer;
+    background: rgba(255,0,0,0.3);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: background 0.2s;
+  }
+
+  .remove-btn:hover {
+    background: rgba(255,0,0,0.7);
+  }
+
+  .btn {
+    padding: 16px 24px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #c41e3a, #8b0000);
+    color: #fff;
+    border: 3px solid #ffd700;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    margin: 10px 0;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(196,30,58,0.5);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+  }
+
+  .btn-green {
+    background: linear-gradient(135deg, #1a5c3a, #0b3d2e);
+  }
+
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .msg {
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .msg-info { 
+    background: rgba(30,144,255,0.3); 
+    border: 2px solid #1e90ff; 
+  }
+
+  .msg-ok { 
+    background: rgba(50,205,50,0.3); 
+    border: 2px solid #32cd32; 
+  }
+
+  .msg-warning {
+    background: rgba(255,165,0,0.3);
+    border: 2px solid #ffa500;
+  }
+
+  .instructions {
+    background: rgba(0,0,0,0.3);
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px dashed #ffd700;
+    margin-bottom: 20px;
+  }
+
+  .instructions ol {
+    margin-left: 20px;
+    margin-top: 10px;
+  }
+
+  .instructions li {
+    margin: 8px 0;
+    font-size: 0.95rem;
+  }
+
+  .participant-count {
+    text-align: center;
+    padding: 10px;
+    background: rgba(255,215,0,0.2);
+    border-radius: 10px;
+    margin: 15px 0;
+    font-weight: bold;
+    color: #ffd700;
+  }
+
+  .admin-code {
+    background: rgba(255,215,0,0.2);
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid #ffd700;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ffd700;
+    margin: 15px 0;
+    font-family: monospace;
+    letter-spacing: 3px;
+  }
+
+  .link-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+  }
+
+  .link-item {
+    background: rgba(0,0,0,0.3);
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid rgba(255,215,0,0.5);
+  }
+
+  .link-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .link-item-name {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #ffd700;
+  }
+
+  .link-item-url {
+    font-size: 0.8rem;
+    word-break: break-all;
+    background: rgba(0,0,0,0.4);
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-family: monospace;
+  }
+
+  .link-item-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .btn-small {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border: 2px solid #ffd700;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    transition: transform 0.2s;
+    flex: 1;
+    min-width: 100px;
+  }
+
+  .btn-small:hover {
+    transform: scale(1.05);
+  }
+
+  .btn-wa { background: #25d366; }
+  .btn-copy { background: #6c757d; }
+
+  .secret-reveal {
+    background: linear-gradient(135deg, #ffd700, #daa520);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    margin: 20px 0;
+    box-shadow: 0 0 30px rgba(255,215,0,0.5);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+  }
+
+  .secret-label {
+    font-size: 1rem;
+    color: #0b3d2e;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .secret-name {
+    font-size: clamp(2rem, 8vw, 3rem);
+    color: #8b0000;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
+  }
+
+  .snow {
+    position: fixed;
+    top: -20px;
+    color: #fff;
+    pointer-events: none;
+    animation: fall linear infinite;
+    z-index: 0;
+  }
+
+  @keyframes fall {
+    to { transform: translateY(110vh) rotate(360deg); }
+  }
+
+  @media (min-width: 768px) {
+    .container { padding: 35px; }
+  }
+
+  @media (max-width: 480px) {
+    .name-input-area { flex-direction: column; }
+    .link-item-actions { flex-direction: column; }
+    .btn-small { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>🎁 Amigo Secreto Navideño 🎄</h1>
+    <p class="subtitle">¡Organiza tu intercambio de regalos!</p>
+    <div class="device-badge" id="deviceBadge">📱 Detectando...</div>
+  </div>
+
+  <!-- PANTALLA 1: Organizador agrega participantes -->
+  <div class="screen active" id="screen1">
+    <div class="instructions">
+      <strong>📋 ¿Cómo funciona?</strong>
+      <ol>
+        <li>Escribe tu nombre (organizador)</li>
+        <li>Agrega los nombres de todos los participantes</li>
+        <li>Genera los enlaces secretos</li>
+        <li>Envía a cada participante SU enlace personal</li>
+        <li>Cada uno verá a quién le tocó regalar</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <div class="section-title">🎅 Paso 1: Tu nombre (organizador)</div>
+      <div class="form-group">
+        <input type="text" id="senderName" placeholder="Ej: María">
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">👥 Paso 2: Agrega los participantes</div>
+      <p style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 10px;">
+        Agrega al menos 3 participantes. Cada nombre debe ser único.
+      </p>
+      
+      <div class="name-input-area">
+        <input type="text" id="nameInput" placeholder="Ej: Juan, Ana, Pedro..." onkeypress="handleNameInput(event)">
+        <button class="btn-add" onclick="agregarParticipante()">➕ Agregar</button>
+      </div>
+
+      <div class="participant-list" id="participantList"></div>
+      <div class="participant-count" id="participantCount">0 participantes agregados</div>
+    </div>
+
+    <button class="btn" id="generateBtn" onclick="generarJuego()" disabled>
+      ✨ Generar Amigo Secreto
+    </button>
+  </div>
+
+  <!-- PANTALLA 2: Enlaces generados -->
+  <div class="screen" id="screen2">
+    <div class="msg msg-ok">
+      ✅ ¡Amigo Secreto creado por <strong id="displayName"></strong>!
+    </div>
+
+    <div class="section">
+      <div class="section-title">🔑 Tu código de administrador</div>
+      <div class="admin-code" id="adminCode"></div>
+      <p style="font-size: 0.9rem; text-align: center;">
+        ⚠️ <strong>¡GUARDA ESTE CÓDIGO!</strong> Lo necesitarás para ver todos los resultados
+      </p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">📨 Enlaces personales para cada participante</div>
+      <p style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 10px;">
+        Envía a cada persona SU enlace único. ¡No compartas el enlace equivocado!
+      </p>
+      <div class="link-list" id="linkList"></div>
+    </div>
+
+    <button class="btn btn-green" onclick="irAPanelAdmin()">
+      👨‍💼 Ir al Panel de Administrador
+    </button>
+
+    <button class="btn" onclick="volverInicio()">
+      🔄 Crear otro juego
+    </button>
+  </div>
+
+  <!-- PANTALLA 3: Jugador ve su amigo secreto -->
+  <div class="screen" id="screen3">
+    <div class="msg msg-info">
+      👋 ¡Hola! <strong id="recipientName"></strong> te invitó a su Amigo Secreto 🎄
+    </div>
+
+    <div class="section">
+      <div class="section-title">🎁 Tu amigo secreto es...</div>
+      <p style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 15px;">
+        Haz clic en el botón para revelar a quién debes regalar
+      </p>
+      <button class="btn" id="revealBtn" onclick="revelarAmigo()">
+        🎁 Revelar mi amigo secreto
+      </button>
+    </div>
+
+    <div id="secretResult" style="display: none;">
+      <div class="secret-reveal">
+        <div class="secret-label">🎅 Debes regalarle a:</div>
+        <div class="secret-name" id="secretName"></div>
+      </div>
+
+      <div class="msg msg-warning">
+        🔒 <strong>¡Secreto!</strong> No le digas a nadie a quién te tocó. ¡La magia del amigo secreto depende de ti!
+      </div>
+
+      <div class="msg msg-info">
+        🎄 Organizado por: <strong id="organizerName"></strong>
+      </div>
+    </div>
+
+    <button class="btn btn-green" onclick="location.reload()">
+      🔄 Volver al inicio
+    </button>
+  </div>
+
+  <!-- PANTALLA 4: Panel de Administrador -->
+  <div class="screen" id="screen4">
+    <div class="msg msg-ok">
+      👨‍💼 Panel de Administrador
+    </div>
+
+    <div class="section">
+      <div class="section-title">🔑 Ingresa tu código de administrador</div>
+      <div class="form-group">
+        <input type="password" id="adminCodeInput" placeholder="Código de 6 caracteres">
+      </div>
+      <button class="btn" onclick="verificarAdmin()">
+        🔓 Ver asignaciones
+      </button>
+    </div>
+
+    <div id="adminPanel" style="display: none;">
+      <div class="section">
+        <div class="section-title">🎮 Asignaciones completas</div>
+        <div class="participant-list" id="assignmentList"></div>
+      </div>
+
+      <button class="btn" onclick="exportarResultados()">
+        📥 Exportar resultados
+      </button>
+
+      <button class="btn btn-green" onclick="volverInicio()">
+        🏠 Volver al inicio
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ============================================
+  // 🎄 AMIGO SECRETO NAVIDEÑO - JAVASCRIPT
+  // ============================================
+
+  // Variables globales
+  let nombreOrganizador = "";
+  let participantes = [];
+  let asignaciones = {}; // { "Juan": "Ana", "Ana": "Pedro", ... }
+  let codigoAdmin = "";
+  let codigoJuego = "";
+  let participanteActual = ""; // Para la pantalla del jugador
+
+  // Detectar dispositivo
+  function detectarDispositivo() {
+    const ua = navigator.userAgent;
+    const badge = document.getElementById("deviceBadge");
+    if (/android/i.test(ua)) badge.textContent = "📱 Android";
+    else if (/iPad|iPhone|iPod/.test(ua)) badge.textContent = "📱 iPhone/iPad";
+    else if (/Windows/i.test(ua)) badge.textContent = "💻 Windows PC";
+    else if (/Macintosh/i.test(ua)) badge.textContent = "💻 Mac";
+    else if (/Linux/i.test(ua)) badge.textContent = "💻 Linux";
+    else badge.textContent = "🌐 Navegador Web";
+  }
+
+  // Agregar participante
+  function agregarParticipante() {
+    const input = document.getElementById("nameInput");
+    const nombre = input.value.trim();
+    
+    if (!nombre) {
+      alert("⚠️ Escribe un nombre");
+      return;
+    }
+
+    // Normalizar nombre (primera letra mayúscula)
+    const nombreNormalizado = nombre.charAt(0).toUpperCase() + nombre.slice(1).toLowerCase();
+
+    // Verificar si ya existe
+    if (participantes.includes(nombreNormalizado)) {
+      alert("⚠️ Este nombre ya fue agregado");
+      return;
+    }
+
+    participantes.push(nombreNormalizado);
+    input.value = "";
+    input.focus();
+    actualizarListaParticipantes();
+  }
+
+  // Manejar Enter en input
+  function handleNameInput(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      agregarParticipante();
+    }
+  }
+
+  // Eliminar participante
+  function eliminarParticipante(nombre) {
+    participantes = participantes.filter(p => p !== nombre);
+    actualizarListaParticipantes();
+  }
+
+  // Actualizar lista visual
+  function actualizarListaParticipantes() {
+    const container = document.getElementById("participantList");
+    if (!container) return;
+
+    container.innerHTML = '';
+    
+    participantes.forEach((nombre, index) => {
+      const item = document.createElement("div");
+      item.className = "participant-item";
+      item.innerHTML = `
+        <div class="participant-number">${index + 1}</div>
+        <div class="participant-name">🎅 ${nombre}</div>
+        <div class="remove-btn" onclick="eliminarParticipante('${nombre}')">✕</div>
+      `;
+      container.appendChild(item);
+    });
+
+    const count = participantes.length;
+    const countEl = document.getElementById("participantCount");
+    if (countEl) {
+      countEl.textContent = count + " participante" + (count !== 1 ? "s" : "") + " agregado" + (count !== 1 ? "s" : "");
+    }
+
+    const btn = document.getElementById("generateBtn");
+    if (btn) btn.disabled = count < 3;
+  }
+
+  // Algoritmo de asignación (derangement)
+  function generarAsignaciones() {
+    const n = participantes.length;
+    if (n < 3) return null;
+
+    // Crear copia barajada
+    let barajada = [...participantes];
+    
+    // Barajar hasta que nadie se asigne a sí mismo
+    let valido = false;
+    let intentos = 0;
+    
+    while (!valido && intentos < 1000) {
+      // Fisher-Yates shuffle
+      for (let i = barajada.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [barajada[i], barajada[j]] = [barajada[j], barajada[i]];
+      }
+      
+      // Verificar que nadie se asigne a sí mismo
+      valido = true;
+      for (let i = 0; i < n; i++) {
+        if (participantes[i] === barajada[i]) {
+          valido = false;
+          break;
+        }
+      }
+      intentos++;
+    }
+
+    if (!valido) return null;
+
+    // Crear asignaciones: participantes[i] → barajada[i]
+    const asignaciones = {};
+    for (let i = 0; i < n; i++) {
+      asignaciones[participantes[i]] = barajada[i];
+    }
+
+    return asignaciones;
+  }
+
+  // Generar código admin
+  function generarCodigoAdmin() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let code = '';
+    for (let i = 0; i < 6; i++) {
+      code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return code;
+  }
+
+  // Navegación entre pantallas
+  function mostrarPantalla(num) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const pantalla = document.getElementById('screen' + num);
+    if (pantalla) pantalla.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Verificar parámetros URL
+  function verificarParametros() {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const host = params.get('host');
+    const player = params.get('player');
+
+    if (code && host && player) {
+      codigoJuego = code;
+      nombreOrganizador = decodeURIComponent(host);
+      participanteActual = decodeURIComponent(player);
+
+      // Cargar datos del juego
+      const juegoData = JSON.parse(localStorage.getItem('juego_' + codigoJuego));
+      if (!juegoData) {
+        alert("❌ Juego no encontrado. Verifica el enlace.");
+        mostrarPantalla(1);
+        return;
+      }
+
+      participantes = juegoData.participantes;
+      asignaciones = juegoData.asignaciones;
+
+      document.getElementById("recipientName").textContent = nombreOrganizador;
+      document.getElementById("organizerName").textContent = nombreOrganizador;
+      
+      mostrarPantalla(3);
+    } else {
+      mostrarPantalla(1);
+    }
+  }
+
+  // Generar juego
+  function generarJuego() {
+    const nombreInput = document.getElementById("senderName");
+    const nombre = nombreInput ? nombreInput.value.trim() : "";
+
+    if (!nombre) {
+      alert("⚠️ Escribe tu nombre");
+      return;
+    }
+
+    if (participantes.length < 3) {
+      alert("⚠️ Agrega al menos 3 participantes");
+      return;
+    }
+
+    // Verificar si el organizador está en la lista
+    const nombreOrg = nombre.charAt(0).toUpperCase() + nombre.slice(1).toLowerCase();
+    if (!participantes.includes(nombreOrg)) {
+      if (confirm(`¿Deseas agregar "${nombreOrg}" a la lista de participantes?`)) {
+        participantes.push(nombreOrg);
+      }
+    }
+
+    nombreOrganizador = nombreOrg;
+    codigoAdmin = generarCodigoAdmin();
+    codigoJuego = Date.now().toString(36) + Math.random().toString(36).substr(2);
+
+    // Generar asignaciones
+    asignaciones = generarAsignaciones();
+    if (!asignaciones) {
+      alert("❌ Error al generar asignaciones. Intenta de nuevo.");
+      return;
+    }
+
+    // Guardar datos del juego
+    const juegoData = {
+      codigo: codigoJuego,
+      organizador: nombreOrganizador,
+      participantes: participantes,
+      asignaciones: asignaciones,
+      codigoAdmin: codigoAdmin,
+      fecha: new Date().toISOString()
+    };
+    localStorage.setItem('juego_' + codigoJuego, JSON.stringify(juegoData));
+
+    // Actualizar UI
+    const displayName = document.getElementById("displayName");
+    if (displayName) displayName.textContent = nombreOrganizador;
+
+    const adminCode = document.getElementById("adminCode");
+    if (adminCode) adminCode.textContent = codigoAdmin;
+
+    // Generar enlaces individuales
+    const linkList = document.getElementById("linkList");
+    if (linkList) {
+      linkList.innerHTML = '';
+      const baseUrl = window.location.origin + window.location.pathname;
+      
+      participantes.forEach(nombre => {
+        const playerParam = encodeURIComponent(nombre);
+        const enlace = `${baseUrl}?code=${codigoJuego}&host=${encodeURIComponent(nombreOrganizador)}&player=${playerParam}`;
+        
+        const item = document.createElement("div");
+        item.className = "link-item";
+        item.innerHTML = `
+          <div class="link-item-header">
+            <div class="link-item-name">🎅 ${nombre}</div>
+          </div>
+          <div class="link-item-url">${enlace}</div>
+          <div class="link-item-actions">
+            <button class="btn-small btn-wa" onclick="enviarWhatsApp('${nombre}', '${enlace}')">📱 WhatsApp</button>
+            <button class="btn-small btn-copy" onclick="copiarEnlace('${enlace}')">📋 Copiar</button>
+          </div>
+        `;
+        linkList.appendChild(item);
+      });
+    }
+
+    mostrarPantalla(2);
+    lanzarConfeti();
+  }
+
+  // Enviar por WhatsApp
+  function enviarWhatsApp(nombre, enlace) {
+    const msg = `🎄 ¡Hola ${nombre}! 🎁\n\n${nombreOrganizador} te invitó a su Amigo Secreto Navideño.\n\nHaz clic en este enlace para descubrir a quién debes regalar:\n\n${enlace}\n\n🔒 ¡Recuerda mantener el secreto! 🤫\n\n🎅 ¡Feliz Navidad!`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
+  }
+
+  // Copiar enlace
+  function copiarEnlace(enlace) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(enlace).then(() => {
+        alert("✅ ¡Enlace copiado al portapapeles!");
+      }).catch(() => copiarEnlaceFallback(enlace));
+    } else {
+      copiarEnlaceFallback(enlace);
+    }
+  }
+
+  function copiarEnlaceFallback(enlace) {
+    const t = document.createElement("textarea");
+    t.value = enlace;
+    document.body.appendChild(t);
+    t.select();
+    document.execCommand("copy");
+    document.body.removeChild(t);
+    alert("✅ ¡Enlace copiado!");
+  }
+
+  // Revelar amigo secreto
+  function revelarAmigo() {
+    if (!participanteActual || !asignaciones[participanteActual]) {
+      alert("❌ Error: No se encontró tu asignación");
+      return;
+    }
+
+    const amigoSecreto = asignaciones[participanteActual];
+    
+    document.getElementById("secretName").textContent = "🎁 " + amigoSecreto;
+    document.getElementById("secretResult").style.display = "block";
+    document.getElementById("revealBtn").style.display = "none";
+
+    lanzarConfeti();
+  }
+
+  // Panel de administrador
+  function irAPanelAdmin() {
+    mostrarPantalla(4);
+  }
+
+  function verificarAdmin() {
+    const codeInput = document.getElementById("adminCodeInput");
+    const code = codeInput ? codeInput.value.trim().toUpperCase() : "";
+
+    if (code !== codigoAdmin) {
+      alert("❌ Código incorrecto");
+      return;
+    }
+
+    const juegoData = JSON.parse(localStorage.getItem('juego_' + codigoJuego));
+    if (!juegoData) {
+      alert("❌ No se encontraron datos del juego");
+      return;
+    }
+
+    // Mostrar asignaciones
+    const assignmentList = document.getElementById("assignmentList");
+    if (assignmentList) {
+      assignmentList.innerHTML = '';
+
+      Object.entries(juegoData.asignaciones).forEach(([dador, receptor], index) => {
+        const item = document.createElement("div");
+        item.className = "participant-item";
+        item.innerHTML = `
+          <div class="participant-number">${index + 1}</div>
+          <div class="participant-name">🎅 ${dador} → 🎁 ${receptor}</div>
+        `;
+        assignmentList.appendChild(item);
+      });
+    }
+
+    const adminPanel = document.getElementById("adminPanel");
+    if (adminPanel) adminPanel.style.display = "block";
+  }
+
+  // Exportar resultados
+  function exportarResultados() {
+    const juegoData = JSON.parse(localStorage.getItem('juego_' + codigoJuego));
+    if (!juegoData || !juegoData.asignaciones) {
+      alert("No hay resultados para exportar");
+      return;
+    }
+
+    let texto = "🎄 AMIGO SECRETO NAVIDEÑO 🎄\n\n";
+    texto += "Organizador: " + juegoData.organizador + "\n";
+    texto += "Fecha: " + new Date(juegoData.fecha).toLocaleString() + "\n\n";
+    texto += "PARTICIPANTES:\n";
+    texto += juegoData.participantes.join(", ") + "\n\n";
+    texto += "ASIGNACIONES:\n";
+    texto += "─".repeat(40) + "\n";
+
+    Object.entries(juegoData.asignaciones).forEach(([dador, receptor], index) => {
+      texto += (index + 1) + ". " + dador + " → regala a → " + receptor + "\n";
+    });
+
+    const blob = new Blob([texto], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'amigo_secreto_' + codigoJuego + '.txt';
+    a.click();
+    window.URL.revokeObjectURL(url);
+
+    alert("✅ Resultados exportados");
+  }
+
+  // Volver al inicio
+  function volverInicio() {
+    const senderName = document.getElementById("senderName");
+    if (senderName) senderName.value = "";
+
+    const adminCodeInput = document.getElementById("adminCodeInput");
+    if (adminCodeInput) adminCodeInput.value = "";
+
+    const adminPanel = document.getElementById("adminPanel");
+    if (adminPanel) adminPanel.style.display = "none";
+
+    const secretResult = document.getElementById("secretResult");
+    if (secretResult) secretResult.style.display = "none";
+
+    const revealBtn = document.getElementById("revealBtn");
+    if (revealBtn) revealBtn.style.display = "block";
+
+    participantes = [];
+    asignaciones = {};
+    actualizarListaParticipantes();
+    mostrarPantalla(1);
+  }
+
+  // Animación de confeti
+  function lanzarConfeti() {
+    const emojis = ["🎄", "⭐", "🎁", "❄️", "🔔", "✨", "🎅"];
+    for (let i = 0; i < 25; i++) {
+      setTimeout(() => {
+        const c = document.createElement("div");
+        c.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        c.style.cssText = `
+          position: fixed;
+          left: ${Math.random() * 100}vw;
+          top: -30px;
+          font-size: ${1 + Math.random() * 1.5}rem;
+          pointer-events: none;
+          z-index: 9999;
+          transition: transform 2.5s ease-in, opacity 2.5s;
+        `;
+        document.body.appendChild(c);
+        requestAnimationFrame(() => {
+          c.style.transform = `translateY(110vh) rotate(${Math.random() * 720}deg)`;
+          c.style.opacity = "0";
+        });
+        setTimeout(() => c.remove(), 2500);
+      }, i * 100);
+    }
+  }
+
+  // Copos de nieve
+  function crearNieve() {
+    const flakes = ["❄", "❅", "❆"];
+    setInterval(() => {
+      const s = document.createElement("div");
+      s.className = "snow";
+      s.textContent = flakes[Math.floor(Math.random() * flakes.length)];
+      s.style.left = Math.random() * 100 + "vw";
+      s.style.fontSize = (0.8 + Math.random() * 1.2) + "rem";
+      s.style.opacity = 0.5 + Math.random() * 0.5;
+      s.style.animationDuration = (5 + Math.random() * 7) + "s";
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 12000);
+    }, 600);
+  }
+
+  // Inicialización
+  document.addEventListener('DOMContentLoaded', () => {
+    detectarDispositivo();
+    verificarParametros();
+    crearNieve();
+  });
+</script>
+
+</body>
+</html>
